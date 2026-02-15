@@ -1,0 +1,4 @@
+- name: Copy {{ component }} service and dynamically update placeholders
+  ansible.builtin.template:
+    src: "{{ component }}.service"
+    dest: "/etc/systemd/system/{{ component }}.service"
