@@ -1,0 +1,93 @@
+# ansible-playbook -i localhost, -e '{ "INSTANCES":["mongodb", "catalogue", "redis", "user", "cart", "mysql", "shipping", "rabbitmq", "payment", "frontend"]}'  roboshop.yaml
+- name: Create EC2 instances and Route53 Records
+  hosts: all
+  connection: local
+  vars:
+    ENV: dev
+    SG_ID: sg-09b115c1d01c0b270
+    AMI_ID: ami-0220d79f3f480ecf5
+    INSTANCE_TYPE: "t3.micro"
+    ROUTE53_HOSTED_ZONE_ID: Z013175831RO1NWFBESW7
+    DOMAIN_URL: "neeli.online"
+    ACTION: create
+    INSTANCES:
+      - mongodb
+      - catalogue
+      - cart
+      - user
+      - redis
+  tasks:
+    #### Create Infrastructure  ####
+    - name: Create EC2 instance
+      amazon.aws.ec2_instance:
+        instance_type: "{{ INSTANCE_TYPE }}"
+        security_group: "{{ SG_ID }}"
+        image_id: "{{ AMI_ID }}"
+        name: "{{ item }}-{{ ENV }}"  # ex: mongodb-dev
+        tags:
+          Project: Roboshop
+          Name: "{{ item }}"
+          Env: "{{ item }}-{{ ENV }}"
+      loop: "{{ INSTANCES }}"
+      register: ec2_output
+      when: ACTION == "create"
+
+    - name: Print EC2 output
+      ansible.builtin.debug:
+        msg: "{{ ec2_output }}"
+      when: ACTION == 'create'
+
+    - name: Create Rout53 Records
+      amazon.aws.route53:
+        state: present
+        zone: "{{ DOMAIN_URL }}"
+        record: "{{ item.item }}-{{ ENV }}.{{ DOMAIN_URL }}"    # mongodb-dev.neeli.online,
+        type: A
+        ttl: 1
+        value: "{{ item.instances[0].private_ip_address }}"
+        wait: true
+        overwrite: true
+      loop: "{{ ec2_output.results }}"
+      when: ACTION == 'create'
+
+    - name: Create Rout53 Records For Frontend
+      amazon.aws.route53:
+        state: present
+        zone: "{{ DOMAIN_URL }}"
+        record: "roboshop-{{ ENV }}.{{ DOMAIN_URL }}"    # roboshop-dev.neeli.online,
+        type: A
+        ttl: 1
+        value: "{{ item.instances[0].public_ip_address }}"
+        wait: true
+      loop: "{{ ec2_output.results }}"
+      when:
+        - item.item == "frontend"
+        - ACTION == 'create'
+
+    #### Destroy Infrastructure  ####
+    - name: Delete Rout53 Records
+      amazon.aws.route53:
+        state: absent
+        zone: "{{ DOMAIN_URL }}"
+        record: "{{ item }}-{{ ENV }}.{{ DOMAIN_URL }}"
+        type: A
+        ttl: 1
+      loop: "{{ INSTANCES }}"
+      when: ACTION == "destroy"
+
+    - name: Delete Rout53 Frontend Record
+      amazon.aws.route53:
+        state: absent
+        zone: "{{ DOMAIN_URL }}"
+        record: "roboshop-{{ ENV }}.{{ DOMAIN_URL }}"
+        type: A
+        ttl: 1
+      when: ACTION == "destroy"
+
+    - name: Delete EC2 instance
+      amazon.aws.ec2_instance:
+        state: absent
+        name: "{{ item }}-{{ ENV }}"
+        wait: false
+      loop: "{{ INSTANCES }}"
+      when: ACTION == "destroy"
