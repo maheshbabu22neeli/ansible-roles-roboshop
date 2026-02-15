@@ -1,6 +1,6 @@
 - name: Copy {{ component }} service and dynamically update placeholders
   ansible.builtin.template:
-    src: "{{ component }}.service"
+    src: "{{ component }}.service.j2"
     dest: "/etc/systemd/system/{{ component }}.service"
 
 - name: Daemon reload
