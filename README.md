@@ -19,9 +19,11 @@ ansible-playbook -i localhost, \
   roboshop.yaml
 ```
 
+ansible-playbook -i localhost, \
+-e '{ "INSTANCES":["mongodb"], "ACTION": "destroy"}' \
+roboshop.yaml
+
 
 ```shell
-ansible-playbook -i localhost, \
- -e '{ "INSTANCES":["mongodb", "catalogue"]}' \
-  roboshop.yaml
+ansible-playbook -i localhost, -e '{ "INSTANCES":["mongodb"]}' roboshop.yaml
 ```
