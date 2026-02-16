@@ -1,0 +1,31 @@
+- name: App setup
+  ansible.builtin.import_role:
+    name: common
+    tasks_from: app-setup.yaml
+
+- name: Systemd setup
+  ansible.builtin.import_role:
+    name: common
+    tasks_from: systemd-setup.yaml
+
+- name : Install python
+  ansible.builtin.dnf:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - python3
+    - gcc
+    - python3-devel
+
+- name: Install dependencies
+  ansible.builtin.pip:
+    requirements: /app/requirements.txt
+    executable: pip3.9
+  args:
+    chdir: /app
+
+- name: Enable and start payment
+  ansible.builtin.service:
+    name: payment
+    state: restarted
+    enabled: yes
