@@ -19,16 +19,12 @@ ansible-playbook -i localhost, \
   roboshop.yaml
 ```
 
-ansible-playbook -i localhost, \
--e '{ "INSTANCES":["mongodb"], "ACTION": "destroy"}' \
-roboshop.yaml
-
 
 ```shell
 ansible-playbook -i localhost, -e '{ "INSTANCES":["mongodb"]}' roboshop.yaml
 ```
 
-
+#### Commands to run for each playbook
 - `ansible-playbook -e component=mongodb anisble-roles-roboshop.yaml`
 - `ansible-playbook -e component=catalogue anisble-roles-roboshop.yaml`
 - `ansible-playbook -e component=redis anisble-roles-roboshop.yaml`
@@ -38,7 +34,4 @@ ansible-playbook -i localhost, -e '{ "INSTANCES":["mongodb"]}' roboshop.yaml
 - `ansible-playbook -e component=shipping anisble-roles-roboshop.yaml`
 - `ansible-playbook -e component=rabbitmq anisble-roles-roboshop.yaml`
 - `ansible-playbook -e component=payment anisble-roles-roboshop.yaml`
-
-
---- have to do from rabbitmq
 
