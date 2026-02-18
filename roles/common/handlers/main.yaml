@@ -1,4 +1,4 @@
 - name: Restart {{ component }}
   ansible.builtin.service:
-    name: {{ component }}
+    name: "{{ component }}"
     state: restarted
