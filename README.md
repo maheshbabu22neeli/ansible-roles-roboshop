@@ -34,4 +34,5 @@ ansible-playbook -i localhost, -e '{ "INSTANCES":["mongodb"]}' roboshop.yaml
 - `ansible-playbook -e component=shipping anisble-roles-roboshop.yaml`
 - `ansible-playbook -e component=rabbitmq anisble-roles-roboshop.yaml`
 - `ansible-playbook -e component=payment anisble-roles-roboshop.yaml`
+- `ansible-playbook -e component=frontend anisble-roles-roboshop.yaml`
 
