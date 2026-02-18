@@ -26,8 +26,9 @@
         name: "{{ item }}-{{ ENV }}"  # ex: mongodb-dev
         tags:
           Project: Roboshop
-          Name: "{{ item }}"
-          Env: "{{ item }}-{{ ENV }}"
+          Component: "{{ item }}"
+          Env: "{{ ENV }}"
+          AppEnv: "{{ item }}-{{ ENV }}"
       loop: "{{ INSTANCES }}"
       register: ec2_output
       when: ACTION == "create"
