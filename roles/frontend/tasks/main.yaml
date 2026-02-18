@@ -31,9 +31,4 @@
   ansible.builtin.template:
     src: frontend_nginx.conf
     dest: /etc/nginx/nginx.conf
-
-- name: Restart nginx
-  ansible.builtin.service:
-    name: nginx
-    state: restarted
-    enabled: yes
+  notify: Restart nginx
