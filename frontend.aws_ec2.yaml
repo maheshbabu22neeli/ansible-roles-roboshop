@@ -5,5 +5,5 @@ hostnames:
   # This option allows displaying the public ip addresses.
   - private-ip-address
 filters:
-  instance-state-name : running
+  instance-state-name: running
   tag:Component: frontend
