@@ -3,5 +3,4 @@ regions:
   - us-east-1
 hostnames:
   # This option allows displaying the public ip addresses.
-  - ip-address
   - private-ip-address
