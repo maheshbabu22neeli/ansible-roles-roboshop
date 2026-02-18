@@ -10,5 +10,5 @@ filters:
   tag:Name: frontend-dev
 keyed_groups:
   # This creates host groups based on key.
-  - prefix: ""
-    key: tags.Name
+  - separator: ''
+    key: tags.Component
