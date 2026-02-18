@@ -1,3 +1,4 @@
+## Query to run 'ansible-inventory -i frontend.aws_ec2.yaml --list '
 plugin: amazon.aws.aws_ec2
 regions:
   - us-east-1
