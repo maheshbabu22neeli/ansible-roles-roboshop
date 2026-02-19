@@ -1,9 +1,9 @@
-# 1. hard the secrets, not recommended
+# 1. hard the secrets     (success).                            - Not recommended
 #MYSQL_ROOT_PASSWORD: RoboShop@1
 
-# 2. Store in the group_vars/mysql/valut.yaml  (success).
+# 2. Store in the group_vars/mysql/valut.yaml  (success).       - Not recommended
 
-# 3. Store in EC2 file location and tell ansible to pick from there.     (Success)
+# 3. Store in EC2 file location and tell ansible to pick from there.     (Failed)   - Not recommended
   #  54.165.226.136 | 172.31.23.10 | t3.micro | null
   # [ ec2-user@ip-172-31-23-10 ~/.ansible ]$ touch .mysql_vault
 
@@ -16,4 +16,4 @@
 
 
 # 3. Store in SSM param (Highly recommended)
-MYSQL_ROOT_PASSWORD:
+#MYSQL_ROOT_PASSWORD:
