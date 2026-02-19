@@ -1,1 +1,2 @@
-MYSQL_ROOT_PASSWORD: RoboShop@1
+#MYSQL_ROOT_PASSWORD: RoboShop@1
+# First time I moved this password to vault.yaml in ec2 instance.
