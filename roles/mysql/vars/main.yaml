@@ -15,7 +15,7 @@
   # DevOps321
 
 
-# 3. Store in SSM param (Highly recommended)     (Success)        - Highly recommended
+# 3. Store in SSM param (Highly recommended)     (Success)              - Highly recommended
 # MYSQL_ROOT_PASSWORD: "{{ lookup('amazon.aws.aws_ssm', '/roboshop-mysql-dev/mysql_root_password', region='us-east-1') }}"
 
 
