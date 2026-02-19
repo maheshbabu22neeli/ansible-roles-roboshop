@@ -16,8 +16,8 @@
 
 
 # 3. Store in SSM param (Highly recommended)     (Success)              - Highly recommended
-# MYSQL_ROOT_PASSWORD: "{{ lookup('amazon.aws.aws_ssm', '/roboshop-mysql-dev/mysql_root_password', region='us-east-1') }}"
+MYSQL_ROOT_PASSWORD: "{{ lookup('amazon.aws.aws_ssm', '/roboshop-mysql-dev/mysql_root_password', region='us-east-1') }}"
 
 
 # 4. Store in Secrets Manager (Highly recommended)     (Success)        - Highly recommended
-MYSQL_ROOT_PASSWORD: "{{ (lookup('amazon.aws.aws_secret', '/roboshop-mysql-dev/mysql_rootPassword', region='us-east-1') | from_json ).MYSQL_ROOT_PASSWORD }}"
+#MYSQL_ROOT_PASSWORD: "{{ (lookup('amazon.aws.aws_secret', '/roboshop-mysql-dev/mysql_rootPassword', region='us-east-1') | from_json ).MYSQL_ROOT_PASSWORD }}"
