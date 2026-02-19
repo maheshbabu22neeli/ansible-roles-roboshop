@@ -1,5 +1,5 @@
 # 1. hard the secrets     (success).                            - Not recommended
-#MYSQL_ROOT_PASSWORD: RoboShop@1
+# MYSQL_ROOT_PASSWORD: RoboShop@1
 
 # 2. Store in the group_vars/mysql/valut.yaml  (success).       - Not recommended
 
@@ -15,5 +15,9 @@
   # DevOps321
 
 
-# 3. Store in SSM param (Highly recommended)
-MYSQL_ROOT_PASSWORD: "{{ lookup('amazon.aws.aws_ssm', '/roboshop-mysql-dev/mysql_root_password', region='us-east-1') }}"
+# 3. Store in SSM param (Highly recommended)     (Success)        - Highly recommended
+# MYSQL_ROOT_PASSWORD: "{{ lookup('amazon.aws.aws_ssm', '/roboshop-mysql-dev/mysql_root_password', region='us-east-1') }}"
+
+
+# 4. Store in Secrets Manager (Highly recommended)     (Success)        - Highly recommended
+MYSQL_ROOT_PASSWORD: "{{ (lookup('amazon.aws.aws_secret', '/roboshop-mysql-dev/mysql_rootPassword', region='us-east-1') | from_json ).MYSQL_ROOT_PASSWORD }}"
