@@ -1,2 +1,4 @@
+# 1. hard the secrets, not recommended
 #MYSQL_ROOT_PASSWORD: RoboShop@1
-# First time I moved this password to vault.yaml in ec2 instance.
+
+# 2. Store in the group_vars/mysql/valut.yaml
